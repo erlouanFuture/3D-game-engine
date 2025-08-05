@@ -1,0 +1,283 @@
+P2<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame()">
+<script>
+
+// ANGLE 0° DEVANT LE PLAYER, de 0 à -180° soit 200% à gauche et 180° à droite, 90° equivaut à un changement de 100% vers la gauche ou droite
+// angle / 90 * pos = new pos
+class Player{
+
+  // ANGLE 0° DEVANT LE PLAYER, de 0 à -180° soit 200% à gauche et 180° à droite, 90° equivaut à un changement de 100% vers la gauche ou droite
+  // angle / 90 * pos = new pos
+
+  this.x = 0;
+  this.y = 0;
+  this.z = 0;
+  this.angle = 0;
+}
+
+
+
+
+function startGame() {
+
+    myGameArea.start();
+    player = new Player();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(realposX, realposY, realposZ) {
+// component(list, list, list, float, float, float)
+
+
+
+this.realposX = realposX;
+this.realposY = realposY;
+this.realposZ = realposZ;
+
+xDistanceP1 = player.x - realposX[0]
+if (xDistanceP1 < 0){
+  xDistanceP1 = -1 * xDistanceP1;
+}
+
+xDistanceP2 = player.x - realposX[1]
+if (xDistanceP2 < 0){
+  xDistanceP2 = -1 * xDistanceP2;
+}
+
+xDistanceP3 = player.x - realposX[2]
+if (xDistanceP3 < 0){
+  xDistanceP3 = -1 * xDistanceP3;
+}
+
+xDistanceP4 = player.x - realposX[3]
+if (xDistanceP4 < 0){
+  xDistanceP4 = -1 * xDistanceP4;
+}
+
+
+
+
+
+yDistanceP1 = player.y - realposY[0]
+if (yDistanceP1 < 0){
+  yDistanceP1 = -1 * yDistanceP1;
+}
+
+yDistanceP2 = player.y - realposY[1]
+if (yDistanceP2 < 0){
+  yDistanceP2 = -1 * yDistanceP2;
+}
+
+yDistanceP3 = player.y - realposY[2]
+if (yDistanceP3 < 0){
+  yDistanceP3 = -1 * yDistanceP3;
+}
+
+yDistanceP4 = player.y - realposY[3]
+if (yDistanceP4 < 0){
+  yDistanceP4 = -1 * yDistanceP4;
+}
+
+
+
+
+zDistanceP1 = player.z - realposZ[0]
+if (zDistanceP1 < 0){
+  zDistanceP1 = -1 * zDistanceP1;
+}
+
+zDistanceP2 = player.z - realposZ[1]
+if (zDistanceP2 < 0){
+  zDistanceP2 = -1 * zDistanceP2;
+}
+
+zDistanceP3 = player.z - realposZ[2]
+if (zDistanceP3 < 0){
+  zDistanceP3 = -1 * zDistanceP3;
+}
+
+zDistanceP4 = player.z - realposZ[3]
+if (zDistanceP4 < 0){
+  zDistanceP4 = -1 * zDistanceP4;
+}
+
+
+angleHorizonP1 = Math.tan(realposY[0] / realposX[0]);
+angleVerticalP1 = Math.tan(realposY[0] / realposZ[0]);
+
+angleHorizonP2 = Math.tan(realposY[1] / realposX[1]);
+angleVerticalP2 = Math.tan(realposY[1] / realposZ[1]);
+
+angleHorizonP3 = Math.tan(realposY[2] / realposX[2]);
+angleVerticalP3 = Math.tan(realposY[2] / realposZ[2]);
+
+angleHorizonP4 = Math.tan(realposY[3] / realposX[3]);
+angleVerticalP4 = Math.tan(realposY[3] / realposZ[3]);
+
+
+
+
+
+
+
+
+// P1 (point)
+if (realposX[0] < player.x){
+   angleHorizonP1 = angleHorizonP1 * (-1);
+
+}
+
+if (realposZ[0] < player.z){
+  angleVerticalP1 = angleVerticalP1 * (-1);
+}
+
+if (realposY[0] < player.y){
+  visibleP1 = "no";
+}
+
+
+
+// P2 (point)
+if (realposX[1] < player.x){
+   angleHorizonP2 = angleHorizonP2 * (-1);
+
+}
+
+if (realposZ[1] < player.z){
+  angleVerticalP2 = angleVerticalP2 * (-1);
+}
+
+if (realposY[1] < player.y){
+  visibleP2 = "no";
+}
+
+
+
+// P3 (point)
+if (realposX[2] < player.x){
+   angleHorizonP3 = angleHorizonP3 * (-1);
+
+}
+
+if (realposZ[2] < player.z){
+  angleVerticalP3 = angleVerticalP3 * (-1);
+}
+
+if (realposY[2] < player.y){
+  visibleP3 = "no";
+}
+
+
+
+// P4 (point)
+if (realposX[3] < player.x){
+   angleHorizonP4 = angleHorizonP4 * (-1);
+
+}
+
+if (realposZ[3] < player.z){
+  angleVerticalP4 = angleVerticalP4 * (-1);
+}
+
+if (realposY[3] < player.y){
+  visibleP4 = "no";
+}
+
+
+// TABLEAU DE PROPORTIONNALITE
+// ANGLE / 90 ET COORDONNE / myGameArea.canvas.width
+
+
+
+
+
+    this.x1 =  (myGameArea.canvas.width / 2) + (angleHorizonP1 / 90) * myGameArea.canvas.width; // angleHorizonP1 / 90 est un peu comme le coefficient de proportionnalité
+// COORDONNE DE L ORIGINE DU REPERE A BON SENS PAR RAPPORT AU ORIGINE GRAPHIQUE (EN HAUT A GAUCHE) MOINS COORD POINT SI NEG ET PLUS SI POSTIV
+    this.y1 = (myGameArea.canvas.height / 2) + (angleHorizonP1 / 90) * myGameArea.canvas.height;
+
+    this.x2 = (myGameArea.canvas.width / 2) + (angleHorizonP2 / 90) * myGameArea.canvas.width;
+    this.y2 =  (myGameArea.canvas.height / 2) + (angleHorizonP2 / 90) * myGameArea.canvas.height;
+
+    this.x3 = (myGameArea.canvas.width / 2) + (angleHorizonP3 / 90) * myGameArea.canvas.width;
+    this.y3 = (myGameArea.canvas.height / 2) + (angleHorizonP3 / 90) * myGameArea.canvas.height;
+
+    this.x4 = (myGameArea.canvas.width / 2) + (angleHorizonP4 / 90) * myGameArea.canvas.width;
+    this.y4 = (myGameArea.canvas.height / 2) + (angleHorizonP4 / 90) * myGameArea.canvas.height;
+
+    this.update = function() {
+      // Get the canvas context
+
+
+
+      // Draw the parallelogram
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.lineTo(x4, y4);
+      ctx.closePath(); // Close the path
+      ctx.fillStyle = 'blue'; // Set fill color
+      ctx.fill();
+
+    }
+    this.nextActionOrMoves = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
+
+function updateGameArea() {
+    myGameArea.clear();
+    myGamePiece.nextActionOrMoves();
+    myGamePiece.update();
+}
+
+function moveup() {
+    myGamePiece.speedY -= 1;
+}
+
+function movedown() {
+    myGamePiece.speedY += 1;
+}
+
+function moveleft() {
+    myGamePiece.speedX -= 1;
+}
+
+function moveright() {
+    myGamePiece.speedX += 1;
+}
+</script>
+<div style="text-align:center;width:480px;">
+  <button onclick="moveup()">UP</button><br><br>
+  <button onclick="moveleft()">LEFT</button>
+  <button onclick="moveright()">RIGHT</button><br><br>
+  <button onclick="movedown()">DOWN</button>
+</div>
+
+<p>If you click a button the red square will start moving. Click the same button many times, and it will move faster and faster.</p>
+</body>
+</html>
